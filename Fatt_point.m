@@ -1,5 +1,5 @@
 function Force = Fatt_point(p_0, p_f)
-%UNTITLED2 Summary of this function goes here
+%Returns a 3x1 force vector 
 %   Detailed explanation goes here
 
 diff = p_0 - p_f
