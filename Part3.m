@@ -33,10 +33,20 @@ q = [pi/2, pi/4, -pi/4];
 q_f = [-pi/3, pi/2, -pi/2];
 Torque = [0 0 0];
 
-curr_pos = double(T(q(1), q(2), q(3)))
-scatter3(curr_pos(1), curr_pos(2), curr_pos(3))
-hold on
-p_path(:,1) = curr_pos;
+% curr_pos = double(T(q(1), q(2), q(3)))
+% scatter3(curr_pos(1), curr_pos(2), curr_pos(3))
+curr_pos_2 = double(O(q(1), q(2), q(3)));
+    joint_1 = [curr_pos_2(:,1)]
+    joint_2 = [curr_pos_2(:,2)]
+    joint_3 = [curr_pos_2(:,3)]
+
+    scatter3(joint_1(1), joint_1(2), joint_1(3), "green")
+    hold on
+    scatter3(joint_2(1), joint_2(2), joint_2(3), "blue")
+    scatter3(joint_3(1), joint_3(2), joint_3(3), "red")
+
+
+%p_path(:,1) = curr_pos;
 
 desired_pos = double(T(q_f(1), q_f(2), q_f(3)));
 
@@ -71,20 +81,30 @@ while 1
     
     
 
-    curr_pos = double(T(q(1), q(2), q(3)));
-    scatter3(curr_pos(1), curr_pos(2), curr_pos(3))
+%     curr_pos = double(T(q(1), q(2), q(3)));
+%     scatter3(curr_pos(1), curr_pos(2), curr_pos(3))
+%     p_path = [p_path curr_pos];
+    
+    curr_pos_2 = double(O(q(1), q(2), q(3)));
+    joint_1 = [joint_1 curr_pos_2(:,1)];
+    joint_2 = [joint_2 curr_pos_2(:,2)];
+    joint_3 = [joint_3 curr_pos_2(:,3)];
+
+    
     
 
-        
-    p_path = [p_path curr_pos];
 
-
-    if norm(q - q_f) < 1 || norm(curr_pos - desired_pos) < 0.1
+    if norm(q - q_f) < 1 || norm(curr_pos_2(:,3) - desired_pos) < 0.1
         break
     end
 
 end
 
+%Plot path points
+    scatter3(joint_1(1,:), joint_1(2,:), joint_1(3,:), "green")
+    scatter3(joint_2(1,:), joint_2(2,:), joint_2(3,:), "blue")
+    scatter3(joint_3(1,:), joint_3(2,:), joint_3(3,:), "red")
+    hold on
 
 [X,Y,Z] = sphere;
 for i =  1:3
