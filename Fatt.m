@@ -1,6 +1,7 @@
 function Force = Fatt(q, q_f, O)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
+%FATT calculates the attractive force on all joints.
+%  Returns a 3x3 force vector where the i'th column represents the force on
+%  the i'th joint
 
 Force = zeros(3, size(q, 2));
 

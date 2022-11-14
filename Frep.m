@@ -1,20 +1,25 @@
-function Force = Frep(q, q_f)
-%UNTITLED4 Summary of this function goes here
+function Force = Frep(q, O)
+%UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
 
-obstacles = []
+%---------------------------------------
+%Frep for spheres 
+%given a sphere origin p_sphere, and radius r
+p_sphere = [1; 1; 1]
+r = 1
 
-eta = 1
+%distance to center
+dst_center = p_sphere - O(q(1), q(2), q(3));
+gradient = dst_center/norm(dst_center);
+distance = dst_center - gradient*r;
 
-for jointNum = 1:size(q, 2)
-    for i = 1:size(obstacles)
-        calculate DISTANCE_TO_OBS
+Force = eta*( (1/distance) - (1/p0))*(1/distance^2)*gradient;
 
-        if DISTANCE_TO_OBS <= AOE_OF_OBS
-            Force = eta*( 1/DISTANCE_TO_OBS - 1/AOE_OF_OBS )* (1/DISTANCE_TO_OBS)^2 * GRADIENT_DIRECTION
-        end
-    end
 
-end
+%-----------------------------------------
+%TODO
+%Frep for walls
+%given a wall center p_wall, height h, width w, and normal vector N
+%This assumes 
 
 end

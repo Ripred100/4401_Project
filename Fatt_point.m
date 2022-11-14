@@ -6,11 +6,11 @@ function Force = Fatt_point(p_0, p_f)
 
 
 %parameters
-d = 1;
+d = 0.5;
 zeta = 1;
 
 %Important quantities
-diff = p_0 - p_f;
+diff = double(p_0 - p_f);
 distance = norm(diff);
 
 %If the points are far away, use a conical potential field
