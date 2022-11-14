@@ -24,25 +24,36 @@ NUM_OF_JOINTS = 3;
 theta = sym('theta',[1 NUM_OF_JOINTS]);
 O(theta) = O_sym
 
-T = T(1:3, 4)
-T(theta) = T
+T = T(1:3, 4);
+T(theta) = T;
+
 
 %Temporary configurations
 q = [pi/2, pi/4, -pi/4];
+q_f = [-pi/3, pi/2, -pi/2];
+Torque = [0 0 0];
+
 curr_pos = double(T(q(1), q(2), q(3)))
-double(O(q(1), q(2), q(3)))
+scatter3(curr_pos(1), curr_pos(2), curr_pos(3))
+hold on
 p_path(:,1) = curr_pos;
-q_f = [0, pi/2, -pi/2];
 
 desired_pos = double(T(q_f(1), q_f(2), q_f(3)));
-Torque = [0 0 0]
 
-while norm(q - q_f) > 0.1
+
+p_spheres = [0.4 0 0.3; 1.5 0 0; 1.6 0.125 1.4];
+radi = [0.2 0.3 0.2];
+
+
+while 1 
 
 
     F_att = double(Fatt(q, q_f, O));
+    F_rep = double(Frep(q, O, p_spheres, radi));
 
 
+    Force = F_att + F_rep;
+    %Force = F_att;
     %calculate Fatt for all joints
 
     %calculate Frep for all joints
@@ -50,25 +61,39 @@ while norm(q - q_f) > 0.1
 
     [Jo3, Jo2, Jo1] = Jacob_oi(O_sym, z, q);
 
-    Torque = double(Jo1*F_att(:, 1) + Jo2*F_att(:, 2) + Jo3*F_att(:, 3)).'
+    Torque = double(Jo1*Force(:, 1) + Jo2*Force(:, 2) + Jo3*Force(:, 3)).'
 
     %min_step_size = 0.05;
-    max_step_size = 0.005;
+    max_step_size = 0.05;
     
 
     q = q + max_step_size*Torque/norm(Torque)
-    hold on
-    plot(q)
+    
+    
 
-    curr_pos = double(T(q(1), q(2), q(3)))
-    desired_pos
+    curr_pos = double(T(q(1), q(2), q(3)));
+    scatter3(curr_pos(1), curr_pos(2), curr_pos(3))
+    
+
         
     p_path = [p_path curr_pos];
 
-    
+
+    if norm(q - q_f) < 1 || norm(curr_pos - desired_pos) < 0.1
+        break
+    end
 
 end
-hold off
+
+
+[X,Y,Z] = sphere;
+for i =  1:3
+r=radi(i);
+X2 = X * r;
+Y2 = Y * r;
+Z2 = Z * r;
+surf(X2 + p_spheres(1,i),Y2 + p_spheres(2,i),Z2 + p_spheres(3,i))
+end
 
 
 %plot3(p_path(1,:), p_path(2,:), p_path(3,:), "Color","b")

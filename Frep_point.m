@@ -3,14 +3,17 @@ function Force = Frep_point(p_0, p_obs)
 %   Detailed explanation goes here
 
 %parameters
-p0 = 1;
+p0 = 0.5;
 eta = 1;
 
 %Important quantities
-diff = p_0 - p_f;
+diff = p_0 - p_obs;
 distance = norm(diff);
 gradient = diff/distance
 
-Force = eta*( (1/distance) - (1/p0))*(1/distance^2)*gradient
-
+if norm(distance) <= p0
+    Force = eta*( (1/distance) - (1/p0))*(1/distance^2)*gradient
+else
+    Force = [0;0;0];
+end
 end
