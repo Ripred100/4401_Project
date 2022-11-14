@@ -1,4 +1,4 @@
-function Torque = torqueFromForce(Force)
+function Torque = torqueFromForce(Force, q)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
