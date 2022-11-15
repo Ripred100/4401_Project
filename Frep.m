@@ -34,10 +34,6 @@ for i = 2:3
     else
         Force(:,i) = Force(:,i) + [0;0;0];
     end
-
 end
 end
-
-
-
 end

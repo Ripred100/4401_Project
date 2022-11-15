@@ -56,7 +56,6 @@ plot3([joint_1(1,1) joint_2(1,1) joint_3(1,1)], ...
 hold on
 %begining manipulator
 scatter3(joint_1(1), joint_1(2), joint_1(3), "green")
-    
 scatter3(joint_2(1), joint_2(2), joint_2(3), "blue")
 scatter3(joint_3(1), joint_3(2), joint_3(3), "red")
 %final manipulator
